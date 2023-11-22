@@ -6,11 +6,11 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class LoginTests extends TestBase{
+public class RegistrationTests extends TestBase{
 
     @Test
-    void successfulLoginTest() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
+    void successfulRegistrationTest() {
+        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
@@ -19,17 +19,18 @@ public class LoginTests extends TestBase{
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("/login")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("id", is(4)).
+                 body("token", is("QpwL5tke4Pnpja7X4"));
     }
 
     @Test
     void missingPasswordTest() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"\" }"; // BAD PRACTICE
+        String authData = "{ \"email\": \"sydney@fife\", \"password\": \"\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
@@ -38,7 +39,7 @@ public class LoginTests extends TestBase{
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("/login")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
@@ -48,7 +49,7 @@ public class LoginTests extends TestBase{
 
     @Test
     void missingEmailTest() {
-        String authData = "{ \"email\": \"\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
+        String authData = "{ \"email\": \"\", \"password\": \"pistol\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
@@ -57,7 +58,7 @@ public class LoginTests extends TestBase{
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("/login")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
@@ -67,7 +68,7 @@ public class LoginTests extends TestBase{
 
     @Test
     void negative400Test() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
+        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
@@ -75,7 +76,7 @@ public class LoginTests extends TestBase{
                 .log().body()
                 .body(authData)
                 .when()
-                .post("/login")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
@@ -90,7 +91,7 @@ public class LoginTests extends TestBase{
                 .log().method()
                 .log().body()
                 .when()
-                .post("/login")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
